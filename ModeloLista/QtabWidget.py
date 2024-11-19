@@ -3,8 +3,9 @@ from PyQt6.QtWidgets import (
     QMainWindow, QVBoxLayout, QListView, QWidget, QApplication,
     QPushButton, QHBoxLayout, QLineEdit
 )
-from ModeloLista.QList import ModeloLista
 
+from EjemploTags.TagsConTinker import texto
+from ModeloLista.QList import ModeloLista
 
 class Ventana(QMainWindow):
     def __init__(self):
@@ -15,7 +16,7 @@ class Ventana(QMainWindow):
         self.setFixedSize(400, 400)
 
         # Modelo de datos
-        lista = [(False, "Ir al gym"), (False, "Hacer los deberes"), (False, "Sacar al perro")]
+        lista = [(False, "Ir al gym"), (False, "Hacer los deberes"), (True, "Sacar al perro")]
         self.modelo = ModeloLista(lista)
 
         # Configuración principal del diseño
@@ -80,11 +81,11 @@ class Ventana(QMainWindow):
         if index:
             # Itera a través de los índices seleccionados
             for i in sorted(index, reverse=True):
-                # Elimina el elemento correspondiente al índice seleccionado
-                self.modelo.lista[i.row()] = True
+                _, texto = self.modelo.lista[i.row()] # Recoge el texto de la tupla
+                self.modelo.lista[i.row()] = True,texto # Devuelve una tupla y la reemplaza por la de la lista en el indice indicado
 
             # Notifica al modelo que los datos han cambiado, para que el QListView se actualice
-            self.modelo.layoutChanged.emit()
+            self.modelo.layoutChanged.emit(index,index)
 
             # Limpia la selección del QListView, para que no queden elementos resaltados
             self.qLista.clearSelection()
