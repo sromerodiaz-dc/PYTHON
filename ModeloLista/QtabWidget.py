@@ -85,7 +85,7 @@ class Ventana(QMainWindow):
                 self.modelo.lista[i.row()] = True,texto # Devuelve una tupla y la reemplaza por la de la lista en el indice indicado
 
             # Notifica al modelo que los datos han cambiado, para que el QListView se actualice
-            self.modelo.layoutChanged.emit(index,index)
+            self.modelo.layoutChanged.emit() # Falta por hacer
 
             # Limpia la selección del QListView, para que no queden elementos resaltados
             self.qLista.clearSelection()
